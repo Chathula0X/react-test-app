@@ -5,6 +5,7 @@ import { mathsQuestions } from '../data/maths'
 import { poems } from '../data/poems'
 import { scienceTopics } from '../data/science'
 import { useStars } from '../hooks/useStars'
+import { useAuth } from '../hooks/useAuth'
 
 const subjects = [
   {
@@ -40,6 +41,7 @@ const subjects = [
 ]
 
 export default function Home() {
+  const { user } = useAuth()
   const { poemStars, progress, scienceStars } = useStars()
   const scienceMax = scienceTopics.reduce((sum, topic) => sum + topic.quiz.length, 0)
 
@@ -55,7 +57,7 @@ export default function Home() {
         🌈
       </p>
       <h1 className="mt-3 font-display text-4xl font-semibold text-violet-950 sm:text-5xl">
-        Hi, little learner!
+        Hi, {user?.name || 'little learner'}!
       </h1>
       <p className="mt-3 max-w-lg text-lg font-semibold text-violet-800/80">
         What shall we do today? Pick a card and earn stars.

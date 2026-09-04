@@ -1,9 +1,9 @@
-import { createContext, useContext, useMemo, useState } from 'react'
-import { poems } from '../data/poems'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { api } from '../api/client'
 import { mathsQuestions } from '../data/maths'
+import { poems } from '../data/poems'
 import { scienceTopics } from '../data/science'
-
-const STORAGE_KEY = 'little-learners-progress'
+import { useAuth } from './useAuth'
 
 const defaultProgress = {
   poems: {},
@@ -13,27 +13,13 @@ const defaultProgress = {
 
 const StarsContext = createContext(null)
 
-function loadProgress() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return defaultProgress
-    const parsed = JSON.parse(raw)
-    return {
-      poems: parsed.poems ?? {},
-      mathsBest: Number(parsed.mathsBest) || 0,
-      science: parsed.science ?? {},
-    }
-  } catch {
-    return defaultProgress
-  }
-}
-
-function saveProgress(progress) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
-}
-
 export function StarsProvider({ children }) {
-  const [progress, setProgress] = useState(loadProgress)
+  const { user, token, setUserProgress } = useAuth()
+  const [progress, setProgress] = useState(user?.progress ?? defaultProgress)
+
+  useEffect(() => {
+    setProgress(user?.progress ?? defaultProgress)
+  }, [user])
 
   const value = useMemo(() => {
     const poemStars = Object.values(progress.poems).filter(Boolean).length
@@ -49,7 +35,15 @@ export function StarsProvider({ children }) {
 
     function update(next) {
       setProgress(next)
-      saveProgress(next)
+      setUserProgress(next)
+      if (!token) return
+      api('/api/progress', {
+        method: 'PUT',
+        token,
+        body: { progress: next },
+      }).catch((error) => {
+        console.error(error)
+      })
     }
 
     return {
@@ -84,7 +78,7 @@ export function StarsProvider({ children }) {
         })
       },
     }
-  }, [progress])
+  }, [progress, token, setUserProgress])
 
   return <StarsContext.Provider value={value}>{children}</StarsContext.Provider>
 }
