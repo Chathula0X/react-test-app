@@ -26,3 +26,4 @@ dist-ssr
 # App data
 .env
 server/data/users.json
+.env.local

@@ -17,8 +17,8 @@ export default function Header() {
   const { totalStars, maxStars } = useStars()
   const backTo = backPath(pathname)
 
-  function handleLogout() {
-    logout()
+  async function handleLogout() {
+    await logout()
     navigate('/login', { replace: true })
   }
 

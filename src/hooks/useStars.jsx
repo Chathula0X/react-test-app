@@ -1,24 +1,19 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { api } from '../api/client'
+import { doc, setDoc } from 'firebase/firestore'
+import { db, emptyProgress } from '../firebase'
 import { mathsQuestions } from '../data/maths'
 import { poems } from '../data/poems'
 import { scienceTopics } from '../data/science'
 import { useAuth } from './useAuth'
 
-const defaultProgress = {
-  poems: {},
-  mathsBest: 0,
-  science: {},
-}
-
 const StarsContext = createContext(null)
 
 export function StarsProvider({ children }) {
-  const { user, token, setUserProgress } = useAuth()
-  const [progress, setProgress] = useState(user?.progress ?? defaultProgress)
+  const { user, setUserProgress } = useAuth()
+  const [progress, setProgress] = useState(user?.progress ?? emptyProgress)
 
   useEffect(() => {
-    setProgress(user?.progress ?? defaultProgress)
+    setProgress(user?.progress ?? emptyProgress)
   }, [user])
 
   const value = useMemo(() => {
@@ -36,14 +31,12 @@ export function StarsProvider({ children }) {
     function update(next) {
       setProgress(next)
       setUserProgress(next)
-      if (!token) return
-      api('/api/progress', {
-        method: 'PUT',
-        token,
-        body: { progress: next },
-      }).catch((error) => {
-        console.error(error)
-      })
+      if (!user?.id) return
+      setDoc(doc(db, 'users', user.id), { progress: next }, { merge: true }).catch(
+        (error) => {
+          console.error(error)
+        },
+      )
     }
 
     return {
@@ -78,7 +71,7 @@ export function StarsProvider({ children }) {
         })
       },
     }
-  }, [progress, token, setUserProgress])
+  }, [progress, user?.id, setUserProgress])
 
   return <StarsContext.Provider value={value}>{children}</StarsContext.Provider>
 }
