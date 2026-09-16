@@ -1,38 +1,185 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap');
 @import 'tailwindcss';
 
 @theme {
-  --font-display: 'Fredoka', system-ui, sans-serif;
-  --font-sans: 'Nunito', system-ui, sans-serif;
+  --font-en: 'Baloo 2', system-ui, sans-serif;
+  --font-si: 'Noto Sans Sinhala', system-ui, sans-serif;
+
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-secondary: #8b5cf6;
+
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-primary-soft: #eef2ff;
+
+  --color-ink: #1e293b;
+  --color-soft: #64748b;
+  --color-muted: #475569;
+
+  --color-border: #e2e8f0;
+  --color-border-interactive: #c7d2fe;
+
+  --color-success: #22c55e;
+  --color-success-soft: #dcfce7;
+
+  --color-warning: #f59e0b;
+  --color-warning-soft: #fef3c7;
+
+  --color-incorrect: #f97316;
+  --color-incorrect-soft: #ffedd5;
 }
 
-html {
-  min-height: 100%;
-}
-
-body {
-  margin: 0;
-  min-height: 100svh;
-  font-family: var(--font-sans);
-  color: #3b0764;
-  background:
-    radial-gradient(circle at top left, #fde68a 0%, transparent 32%),
-    radial-gradient(circle at top right, #fda4af 0%, transparent 28%),
-    radial-gradient(circle at bottom, #6ee7b7 0%, transparent 30%),
-    #fdf4ff;
-}
-
+html,
+body,
 #root {
   min-height: 100svh;
 }
 
-button,
-a {
+body {
+  margin: 0;
+  font-family: var(--font-si);
+  color: var(--color-ink);
+  background: var(--color-background);
+}
+
+button {
   -webkit-tap-highlight-color: transparent;
 }
 
-button:focus-visible,
-a:focus-visible {
-  outline: 3px solid #7c3aed;
-  outline-offset: 3px;
+.en {
+  font-family: var(--font-en);
+}
+
+.si {
+  font-family: var(--font-si);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+.shake {
+  animation: shake 0.35s ease;
+}
+
+.app-shell {
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  background: var(--color-background);
+}
+
+.app-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100svh;
+  background: var(--color-surface);
+}
+
+.app-frame-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding: max(1rem, env(safe-area-inset-top)) 1.25rem 1rem;
+}
+
+.app-frame-footer {
+  flex: none;
+  padding: 0.5rem 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+}
+
+.btn-primary {
+  display: block;
+  width: 100%;
+  min-height: 3rem;
+  border: 0;
+  border-radius: 0.9rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-si);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.btn-primary:disabled {
+  background: var(--color-border);
+  color: var(--color-soft);
+}
+
+.btn-ghost {
+  display: block;
+  width: 100%;
+  min-height: 3rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 0.9rem;
+  background: var(--color-surface);
+  color: var(--color-soft);
+  font-family: var(--font-si);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background: var(--color-primary-soft);
+  border-color: var(--color-border-interactive);
+  color: var(--color-ink);
+}
+
+@media (min-width: 768px) {
+  .app-shell {
+    align-items: center;
+    padding: 1.5rem 1.5rem;
+    background:
+      radial-gradient(circle at 12% 8%, var(--color-primary-soft) 0%, transparent 34%),
+      var(--color-background);
+  }
+
+  .app-frame {
+    width: min(100%, 26.5rem);
+    min-height: auto;
+    max-height: calc(100svh - 3rem);
+    border-radius: 1.75rem;
+    box-shadow: 0 24px 64px rgb(30 41 59 / 0.08);
+    overflow: hidden;
+  }
+
+  .app-frame-wide {
+    width: min(100%, 56rem);
+    min-height: auto;
+    max-height: none;
+  }
+
+  .app-frame-wide .app-frame-body {
+    padding: 1.5rem 2rem 1rem;
+  }
+
+  .app-frame-wide .app-frame-footer {
+    padding: 0 2rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-frame:not(.app-frame-wide) {
+    width: min(100%, 28rem);
+  }
 }
