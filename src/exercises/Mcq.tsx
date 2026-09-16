@@ -4,7 +4,7 @@ import SpeakerButton from '../components/SpeakerButton'
 import { getItem } from '../lib/items'
 import { t } from '../lib/i18n'
 import { mulberry32, shuffle } from '../lib/rng'
-import { playFile, playTone, speakSi } from '../lib/audio'
+import { playFile, playTone } from '../lib/audio'
 import type { ExerciseType, Item, StepResult } from '../types'
 
 type McqOption = {
@@ -37,10 +37,7 @@ export default function Mcq({ item, type, seed, onResult }: McqProps) {
   }, [item.id, type, seed])
 
   useEffect(() => {
-    if (type === 'MCQ_SI_TO_EN') {
-      speakSi(item.si_sentence)
-      return
-    }
+    if (type === 'MCQ_SI_TO_EN') return
     playFile(type === 'IMAGE_MATCH' ? item.audio_sentence : item.audio_word)
   }, [item, type, seed])
 
@@ -118,9 +115,7 @@ export default function Mcq({ item, type, seed, onResult }: McqProps) {
     <div className="flex flex-1 flex-col gap-3">
       <p className="si text-center text-muted">{title}</p>
       {type === 'MCQ_SI_TO_EN' ? (
-        <button type="button" onClick={() => speakSi(item.si_sentence)} className="si text-center text-2xl font-bold">
-          {item.si_sentence}
-        </button>
+        <p className="si text-center text-2xl font-bold">{item.si_sentence}</p>
       ) : type === 'IMAGE_MATCH' ? (
         <div className="flex items-center justify-center gap-2">
           <button type="button" onClick={() => playFile(item.audio_sentence)} className="en text-xl">
