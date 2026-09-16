@@ -7,18 +7,8 @@ import TypeWord from '../exercises/TypeWord'
 import Mcq from '../exercises/Mcq'
 import { useApp } from '../hooks/useApp'
 import { getItem } from '../lib/items'
-import { speakSi } from '../lib/audio'
 import { t } from '../lib/i18n'
 import type { StepResult } from '../types'
-
-const STEP_COPY: Record<string, string> = {
-  TEACH_CARD: 'step.listen',
-  WORD_BUILD: 'step.arrangeLetters',
-  TYPE_WORD: 'step.typeTheWord',
-  MCQ_SPELLING: 'step.pickCorrectSpelling',
-  MCQ_SI_TO_EN: 'step.whatDoesThisMean',
-  IMAGE_MATCH: 'step.pickTheImage',
-}
 
 export default function LessonRunner() {
   const { ready, profile, answerStep } = useApp()
@@ -39,13 +29,6 @@ export default function LessonRunner() {
       navigate('/home', { replace: true })
     }
   }, [ready, profile, navigate])
-
-  useEffect(() => {
-    if (!step) return
-    if (step.type === 'IMAGE_MATCH' || step.type === 'MCQ_SPELLING' || step.type === 'MCQ_SI_TO_EN') return
-    const key = STEP_COPY[step.type]
-    if (key) speakSi(t(key))
-  }, [lesson?.stepIndex, step])
 
   if (!ready || !profile || !lesson || !step || !item) return null
 

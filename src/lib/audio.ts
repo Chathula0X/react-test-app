@@ -1,6 +1,5 @@
 export function playFile(src?: string) {
   if (!src) return
-  window.speechSynthesis?.cancel()
   const audio = new Audio(src)
   audio.play().catch(() => {})
 }
@@ -22,12 +21,4 @@ export function playTone(ok: boolean) {
   } catch {
     /* sound is optional — never block a step */
   }
-}
-
-export function speakSi(text: string) {
-  if (!window.speechSynthesis || !text) return
-  const utter = new SpeechSynthesisUtterance(text)
-  utter.lang = 'si-LK'
-  window.speechSynthesis.cancel()
-  window.speechSynthesis.speak(utter)
 }
