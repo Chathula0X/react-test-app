@@ -1,0 +1,392 @@
+{
+    "id": "unit-01",
+    "title_si": "ඒකකය 1",
+    "lessons": [
+      { "n": 1, "theme_si": "පලතුරු" },
+      { "n": 2, "theme_si": "සතුන්" },
+      { "n": 3, "theme_si": "පාසල් උපකරණ"},
+      { "n": 4, "theme_si": "නිවසේ උපකරණ "}
+    ],
+    "items": [
+      {
+        "id": "en.noun.mango",
+        "type": "noun",
+        "lesson": 1,
+        "en": "mango",
+        "en_sentence": "This is a mango.",
+        "si": "අඹ",
+        "si_sentence": "මේ අඹ ගෙඩියක්",
+        "emoji": "🥭",
+        "image": "/img/items/mango.webp",
+        "audio_word": "/audio/en/mango.mp3",
+        "audio_sentence": "/audio/en/this-is-a-mango.mp3",
+        "distractors": {
+          "spelling": ["mangoe", "manggo", "mengo"],
+          "meaning_en": ["This is a banana.", "This is an apple.", "This is a papaya."],
+          "letters": ["r", "e"],
+          "image": ["en.noun.banana", "en.noun.apple", "en.noun.papaya"]
+        }
+      },
+      {
+        "id": "en.noun.banana",
+        "type": "noun",
+        "lesson": 1,
+        "en": "banana",
+        "en_sentence": "This is a banana.",
+        "si": "කෙසෙල්",
+        "si_sentence": "මේ කෙසෙල් ගෙඩියක්",
+        "emoji": "🍌",
+        "image": "/img/items/banana.webp",
+        "audio_word": "/audio/en/banana.mp3",
+        "audio_sentence": "/audio/en/this-is-a-banana.mp3",
+        "distractors": {
+          "spelling": ["banan", "bannana", "bananna"],
+          "meaning_en": ["This is a mango.", "This is an apple.", "This is a coconut."],
+          "letters": ["m", "o"],
+          "image": ["en.noun.mango", "en.noun.apple", "en.noun.coconut"]
+        }
+      },
+      {
+        "id": "en.noun.coconut",
+        "type": "noun",
+        "lesson": 1,
+        "en": "coconut",
+        "en_sentence": "This is a coconut.",
+        "si": "පොල්",
+        "si_sentence": "මේ පොල් ගෙඩියක්",
+        "emoji": "🥥",
+        "image": "/img/items/coconut.webp",
+        "audio_word": "/audio/en/coconut.mp3",
+        "audio_sentence": "/audio/en/this-is-a-coconut.mp3",
+        "distractors": {
+          "spelling": ["cocanut", "coconat", "kokonut"],
+          "meaning_en": ["This is a mango.", "This is a banana.", "This is a papaya."],
+          "letters": ["k", "s"],
+          "image": ["en.noun.mango", "en.noun.banana", "en.noun.papaya"]
+        }
+      },
+      {
+        "id": "en.noun.papaya",
+        "type": "noun",
+        "lesson": 1,
+        "en": "papaya",
+        "en_sentence": "This is a papaya.",
+        "si": "පැපොල්",
+        "si_sentence": "මේ පැපොල් ගෙඩියක්",
+        "emoji": "🧡",
+        "image": "/img/items/papaya.webp",
+        "audio_word": "/audio/en/papaya.mp3",
+        "audio_sentence": "/audio/en/this-is-a-papaya.mp3",
+        "distractors": {
+          "spelling": ["papayaa", "papeia", "papya"],
+          "meaning_en": ["This is a mango.", "This is an apple.", "This is a banana."],
+          "letters": ["i", "o"],
+          "image": ["en.noun.mango", "en.noun.apple", "en.noun.banana"]
+        }
+      },
+      {
+        "id": "en.noun.apple",
+        "type": "noun",
+        "lesson": 1,
+        "en": "apple",
+        "en_sentence": "This is an apple.",
+        "si": "ඇපල්",
+        "si_sentence": "මේ ඇපල් ගෙඩියක්",
+        "emoji": "🍎",
+        "image": "/img/items/apple.webp",
+        "audio_word": "/audio/en/apple.mp3",
+        "audio_sentence": "/audio/en/this-is-an-apple.mp3",
+        "distractors": {
+          "spelling": ["aple", "appel", "appl"],
+          "meaning_en": ["This is a mango.", "This is a banana.", "This is a papaya."],
+          "letters": ["o", "n"],
+          "image": ["en.noun.mango", "en.noun.banana", "en.noun.papaya"]
+        }
+      },
+      {
+        "id": "en.noun.dog",
+        "type": "noun",
+        "lesson": 2,
+        "en": "dog",
+        "en_sentence": "This is a dog.",
+        "si": "බල්ලා",
+        "si_sentence": "මේ බල්ලෙක්",
+        "emoji": "🐶",
+        "image": "/img/items/dog.webp",
+        "audio_word": "/audio/en/dog.mp3",
+        "audio_sentence": "/audio/en/this-is-a-dog.mp3",
+        "distractors": {
+          "spelling": ["dogg", "doog", "dag"],
+          "meaning_en": ["This is a cat.", "This is a cow.", "This is a bird."],
+          "letters": ["a", "t"],
+          "image": ["en.noun.cat", "en.noun.cow", "en.noun.bird"]
+        }
+      },
+      {
+        "id": "en.noun.cat",
+        "type": "noun",
+        "lesson": 2,
+        "en": "cat",
+        "en_sentence": "This is a cat.",
+        "si": "පූසා",
+        "si_sentence": "මේ පූසෙක්",
+        "emoji": "🐱",
+        "image": "/img/items/cat.webp",
+        "audio_word": "/audio/en/cat.mp3",
+        "audio_sentence": "/audio/en/this-is-a-cat.mp3",
+        "distractors": {
+          "spelling": ["kat", "catt", "cet"],
+          "meaning_en": ["This is a dog.", "This is a bird.", "This is a fish."],
+          "letters": ["k", "e"],
+          "image": ["en.noun.dog", "en.noun.bird", "en.noun.fish"]
+        }
+      },
+      {
+        "id": "en.noun.cow",
+        "type": "noun",
+        "lesson": 2,
+        "en": "cow",
+        "en_sentence": "This is a cow.",
+        "si": "එළදෙන",
+        "si_sentence": "මේ එළදෙනක්",
+        "emoji": "🐮",
+        "image": "/img/items/cow.webp",
+        "audio_word": "/audio/en/cow.mp3",
+        "audio_sentence": "/audio/en/this-is-a-cow.mp3",
+        "distractors": {
+          "spelling": ["kow", "cowe", "coo"],
+          "meaning_en": ["This is a dog.", "This is a cat.", "This is a bird."],
+          "letters": ["k", "a"],
+          "image": ["en.noun.dog", "en.noun.cat", "en.noun.bird"]
+        }
+      },
+      {
+        "id": "en.noun.bird",
+        "type": "noun",
+        "lesson": 2,
+        "en": "bird",
+        "en_sentence": "This is a bird.",
+        "si": "කුරුල්ලා",
+        "si_sentence": "මේ කුරුල්ලෙක්",
+        "emoji": "🐦",
+        "image": "/img/items/bird.webp",
+        "audio_word": "/audio/en/bird.mp3",
+        "audio_sentence": "/audio/en/this-is-a-bird.mp3",
+        "distractors": {
+          "spelling": ["burd", "brid", "berd"],
+          "meaning_en": ["This is a fish.", "This is a dog.", "This is a cat."],
+          "letters": ["u", "e"],
+          "image": ["en.noun.fish", "en.noun.dog", "en.noun.cat"]
+        }
+      },
+      {
+        "id": "en.noun.fish",
+        "type": "noun",
+        "lesson": 2,
+        "en": "fish",
+        "en_sentence": "This is a fish.",
+        "si": "මාළුවා",
+        "si_sentence": "මේ මාළුවෙක්",
+        "emoji": "🐟",
+        "image": "/img/items/fish.webp",
+        "audio_word": "/audio/en/fish.mp3",
+        "audio_sentence": "/audio/en/this-is-a-fish.mp3",
+        "distractors": {
+          "spelling": ["fech", "fishe", "phish"],
+          "meaning_en": ["This is a bird.", "This is a dog.", "This is a cow."],
+          "letters": ["e", "a"],
+          "image": ["en.noun.bird", "en.noun.dog", "en.noun.cow"]
+        }
+      },
+      {
+        "id": "en.noun.book",
+        "type": "noun",
+        "lesson": 3,
+        "en": "book",
+        "en_sentence": "This is a book.",
+        "si": "පොත",
+        "si_sentence": "මේක පොතක්",
+        "emoji": "📖",
+        "image": "/img/items/book.webp",
+        "audio_word": "/audio/en/book.mp3",
+        "audio_sentence": "/audio/en/this-is-a-book.mp3",
+        "distractors": {
+          "spelling": ["bok", "boock", "buk"],
+          "meaning_en": ["This is a pen.", "This is a bag.", "This is a chair."],
+          "letters": ["r", "n"],
+          "image": ["en.noun.pen", "en.noun.bag", "en.noun.chair"]
+        }
+      },
+      {
+        "id": "en.noun.pen",
+        "type": "noun",
+        "lesson": 3,
+        "en": "pen",
+        "en_sentence": "This is a pen.",
+        "si": "පෑන",
+        "si_sentence": "මේක පෑනක්",
+        "emoji": "🖊️",
+        "image": "/img/items/pen.webp",
+        "audio_word": "/audio/en/pen.mp3",
+        "audio_sentence": "/audio/en/this-is-a-pen.mp3",
+        "distractors": {
+          "spelling": ["penn", "peen", "pan"],
+          "meaning_en": ["This is a book.", "This is a bag.", "This is a table."],
+          "letters": ["a", "o"],
+          "image": ["en.noun.book", "en.noun.bag", "en.noun.table"]
+        }
+      },
+      {
+        "id": "en.noun.bag",
+        "type": "noun",
+        "lesson": 3,
+        "en": "bag",
+        "en_sentence": "This is a bag.",
+        "si": "බෑගය",
+        "si_sentence": "මේක බෑගයක්",
+        "emoji": "🎒",
+        "image": "/img/items/bag.webp",
+        "audio_word": "/audio/en/bag.mp3",
+        "audio_sentence": "/audio/en/this-is-a-bag.mp3",
+        "distractors": {
+          "spelling": ["bagg", "beg", "baag"],
+          "meaning_en": ["This is a book.", "This is a chair.", "This is a pen."],
+          "letters": ["o", "n"],
+          "image": ["en.noun.book", "en.noun.chair", "en.noun.pen"]
+        }
+      },
+      {
+        "id": "en.noun.chair",
+        "type": "noun",
+        "lesson": 3,
+        "en": "chair",
+        "en_sentence": "This is a chair.",
+        "si": "පුටුව",
+        "si_sentence": "මේක පුටුවක්",
+        "emoji": "🪑",
+        "image": "/img/items/chair.webp",
+        "audio_word": "/audio/en/chair.mp3",
+        "audio_sentence": "/audio/en/this-is-a-chair.mp3",
+        "distractors": {
+          "spelling": ["chare", "cheir", "chaire"],
+          "meaning_en": ["This is a table.", "This is a bag.", "This is a book."],
+          "letters": ["o", "k"],
+          "image": ["en.noun.table", "en.noun.bag", "en.noun.book"]
+        }
+      },
+      {
+        "id": "en.noun.table",
+        "type": "noun",
+        "lesson": 3,
+        "en": "table",
+        "en_sentence": "This is a table.",
+        "si": "මේසය",
+        "si_sentence": "මේක මේසයක්",
+        "emoji": "🪵",
+        "image": "/img/items/table.webp",
+        "audio_word": "/audio/en/table.mp3",
+        "audio_sentence": "/audio/en/this-is-a-table.mp3",
+        "distractors": {
+          "spelling": ["tabel", "tabl", "taible"],
+          "meaning_en": ["This is a chair.", "This is a pen.", "This is a bag."],
+          "letters": ["k", "o"],
+          "image": ["en.noun.chair", "en.noun.pen", "en.noun.bag"]
+        }
+      },
+      {
+        "id": "en.noun.house",
+        "type": "noun",
+        "lesson": 4,
+        "en": "house",
+        "en_sentence": "This is a house.",
+        "si": "ගෙය",
+        "si_sentence": "මේක ගෙයක්",
+        "emoji": "🏠",
+        "image": "/img/items/house.webp",
+        "audio_word": "/audio/en/house.mp3",
+        "audio_sentence": "/audio/en/this-is-a-house.mp3",
+        "distractors": {
+          "spelling": ["hous", "howse", "hawse"],
+          "meaning_en": ["This is a tree.", "This is water.", "This is rice."],
+          "letters": ["a", "k"],
+          "image": ["en.noun.tree", "en.noun.water", "en.noun.rice"]
+        }
+      },
+      {
+        "id": "en.noun.tree",
+        "type": "noun",
+        "lesson": 4,
+        "en": "tree",
+        "en_sentence": "This is a tree.",
+        "si": "ගස",
+        "si_sentence": "මේක ගසක්",
+        "emoji": "🌳",
+        "image": "/img/items/tree.webp",
+        "audio_word": "/audio/en/tree.mp3",
+        "audio_sentence": "/audio/en/this-is-a-tree.mp3",
+        "distractors": {
+          "spelling": ["tre", "trie", "treee"],
+          "meaning_en": ["This is a house.", "This is milk.", "This is water."],
+          "letters": ["o", "n"],
+          "image": ["en.noun.house", "en.noun.milk", "en.noun.water"]
+        }
+      },
+      {
+        "id": "en.noun.water",
+        "type": "noun",
+        "lesson": 4,
+        "en": "water",
+        "en_sentence": "This is water.",
+        "si": "වතුර",
+        "si_sentence": "මේ වතුර",
+        "emoji": "💧",
+        "image": "/img/items/water.webp",
+        "audio_word": "/audio/en/water.mp3",
+        "audio_sentence": "/audio/en/this-is-water.mp3",
+        "distractors": {
+          "spelling": ["watter", "weter", "watre"],
+          "meaning_en": ["This is milk.", "This is rice.", "This is a house."],
+          "letters": ["o", "k"],
+          "image": ["en.noun.milk", "en.noun.rice", "en.noun.house"]
+        }
+      },
+      {
+        "id": "en.noun.rice",
+        "type": "noun",
+        "lesson": 4,
+        "en": "rice",
+        "en_sentence": "This is rice.",
+        "si": "බත්",
+        "si_sentence": "මේ බත්",
+        "emoji": "🍚",
+        "image": "/img/items/rice.webp",
+        "audio_word": "/audio/en/rice.mp3",
+        "audio_sentence": "/audio/en/this-is-rice.mp3",
+        "distractors": {
+          "spelling": ["rise", "riec", "ryce"],
+          "meaning_en": ["This is milk.", "This is water.", "This is a tree."],
+          "letters": ["a", "o"],
+          "image": ["en.noun.milk", "en.noun.water", "en.noun.tree"]
+        }
+      },
+      {
+        "id": "en.noun.milk",
+        "type": "noun",
+        "lesson": 4,
+        "en": "milk",
+        "en_sentence": "This is milk.",
+        "si": "කිරි",
+        "si_sentence": "මේ කිරි",
+        "emoji": "🥛",
+        "image": "/img/items/milk.webp",
+        "audio_word": "/audio/en/milk.mp3",
+        "audio_sentence": "/audio/en/this-is-milk.mp3",
+        "distractors": {
+          "spelling": ["milc", "melk", "millk"],
+          "meaning_en": ["This is water.", "This is rice.", "This is a house."],
+          "letters": ["a", "o"],
+          "image": ["en.noun.water", "en.noun.rice", "en.noun.house"]
+        }
+      }
+    ]
+  }
