@@ -6,7 +6,10 @@ export type ExerciseType =
   | 'TYPE_WORD'
   | 'MCQ_SPELLING'
   | 'MCQ_SI_TO_EN'
+  | 'MCQ_EN_TO_SI'
   | 'IMAGE_MATCH'
+  | 'SPELL_FROM_AUDIO'
+  | 'LISTEN_REPEAT'
 
 export type ItemProgress = {
   box: LeitnerBox
@@ -36,10 +39,26 @@ export type Item = {
   }
 }
 
+export type UnitStatus = 'live' | 'next'
+
+export type LessonMeta = {
+  id: string
+  order: number
+  theme_en: string
+  theme_si: string
+  pattern: string
+  items: string[]
+}
+
 export type ContentPack = {
   id: string
+  order: number
+  title_en: string
   title_si: string
-  lessons: { n: number; theme_si: string }[]
+  outcome_en: string
+  outcome_si: string
+  status: UnitStatus
+  lessons: LessonMeta[]
   items: Item[]
 }
 
@@ -81,6 +100,8 @@ export type AppState = {
 export type StepResult = {
   correct: boolean
   rescued: boolean
+  skipped?: boolean
+  unscored?: boolean 
 }
 
 export type Rng = () => number

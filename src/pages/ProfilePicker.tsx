@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import AppShell from '../components/AppShell'
 import { useApp } from '../hooks/useApp'
 import { t } from '../lib/i18n'
@@ -37,6 +37,7 @@ export default function ProfilePicker() {
       }
     >
       <h1 className="si mb-6 text-center text-2xl font-bold text-ink md:text-4xl">{t('picker.title')}</h1>
+      
       <div className="mx-auto grid w-full max-w-3xl grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4">
         {profiles.map((p) => (
           <button
@@ -57,6 +58,7 @@ export default function ProfilePicker() {
           ＋
         </button>
       </div>
+
       {adding && (
         <div className="mx-auto mt-8 w-full max-w-md space-y-4">
           <div className="flex flex-wrap justify-center gap-3">
@@ -81,6 +83,12 @@ export default function ProfilePicker() {
           />
         </div>
       )}
+
+      <div className="mt-8 text-center">
+        <Link to="/curriculum" className="si text-sm text-soft hover:underline">
+          {t('entry.forParents')}
+        </Link>
+      </div>
     </AppShell>
   )
 }

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppShell from '../components/AppShell'
 import { useApp } from '../hooks/useApp'
-import { getLessonMeta } from '../lib/items'
+import { getLessonCount, getLessonMeta } from '../lib/items'
 import { t } from '../lib/i18n'
 
 function displayName(name: string) {
@@ -20,11 +20,14 @@ export default function Home() {
 
   if (!ready || !profile) return null
 
-  const meta = getLessonMeta(profile.lessonNumber) || { theme_si: 'ඉවරයි' }
-  const progress = Math.min(100, Math.max(8, ((profile.lessonNumber - 1) / 4) * 100))
+  const totalLessons = getLessonCount()
+  const meta = getLessonMeta(profile.lessonNumber)
+  const unitDone = !meta
+  const progress = Math.min(100, Math.max(8, ((profile.lessonNumber - 1) / totalLessons) * 100))
   const name = displayName(profile.name)
 
   function go() {
+    if (unitDone) return
     startOrResumeLesson()
     navigate('/lesson')
   }
@@ -48,25 +51,33 @@ export default function Home() {
               <span className="si text-[1.55rem] font-bold md:text-[1.9rem]">{t('greeting.hello')}</span>{' '}
               <span className="en text-[1.55rem] font-extrabold md:text-[1.9rem]">{name}!</span>
             </h1>
-            <p className="si mt-1.5 text-base leading-snug text-soft md:text-lg">{t('home.prompt')}</p>
+            <p className="si mt-1.5 text-base leading-snug text-soft md:text-lg">
+              {unitDone ? t('home.finished') : t('home.prompt')}
+            </p>
           </div>
         </div>
 
         <div className="rounded-3xl border-2 border-border bg-surface p-5 md:p-6">
-          <p className="si text-xl font-bold md:text-2xl">{t('lesson.label', { n: profile.lessonNumber })}</p>
-          <p className="si mt-1 text-soft">
-            {meta.theme_si} · {t('home.words')}
+          <p className="si text-xl font-bold md:text-2xl">
+            {unitDone ? t('unit.done') : t('lesson.label', { n: profile.lessonNumber })}
           </p>
+          {!unitDone && (
+            <p className="si mt-1 text-soft">
+              {meta.theme_si} · {t('home.words')}
+            </p>
+          )}
           <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-border">
             <i className="block h-full rounded-full bg-primary" style={{ width: `${progress}%` }} />
           </div>
-          <button
-            type="button"
-            className="si mt-5 w-full min-h-12 rounded-[0.9rem] bg-primary px-4 text-[1.05rem] font-bold text-white shadow-[0_3px_0_var(--color-primary-hover)] transition hover:bg-primary-hover active:translate-y-px active:shadow-none"
-            onClick={go}
-          >
-            {t('home.continue')}
-          </button>
+          {!unitDone && (
+            <button
+              type="button"
+              className="si mt-5 w-full min-h-12 rounded-[0.9rem] bg-primary px-4 text-[1.05rem] font-bold text-white shadow-[0_3px_0_var(--color-primary-hover)] transition hover:bg-primary-hover active:translate-y-px active:shadow-none"
+              onClick={go}
+            >
+              {t('home.continue')}
+            </button>
+          )}
         </div>
       </div>
     </AppShell>

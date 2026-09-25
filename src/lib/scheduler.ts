@@ -7,13 +7,14 @@ export function pickReview({
   items,
   recentIds,
   rng,
+  now = Date.now(),
 }: {
   itemProgress: Record<string, ItemProgress>
   items: Item[]
   recentIds: string[]
   rng: Rng
+  now?: number
 }): LessonStep | null {
-  const now = Date.now()
   const learning = items.filter((item) => {
     const p = itemProgress[item.id]
     return p?.box === 'learning' && !recentIds.includes(item.id)
@@ -34,9 +35,10 @@ export function pickReview({
 
 function chooseType(item: Item, progress: ItemProgress | undefined, rng: Rng): LessonStep {
   const streak = progress?.streak || 0
-  const easy: ExerciseType[] = ['IMAGE_MATCH', 'WORD_BUILD']
-  const harder: ExerciseType[] = ['MCQ_SPELLING', 'MCQ_SI_TO_EN']
-  const pool = streak === 0 ? easy : harder
+  const tier0: ExerciseType[] = ['IMAGE_MATCH', 'WORD_BUILD']
+  const tier1: ExerciseType[] = ['MCQ_SI_TO_EN', 'MCQ_EN_TO_SI', 'LISTEN_REPEAT']
+  const tier2: ExerciseType[] = ['MCQ_SPELLING', 'SPELL_FROM_AUDIO']
+  const pool = streak <= 0 ? tier0 : streak === 1 ? tier1 : tier2
   const type = pool[Math.floor(rng() * pool.length)]
   return { type, itemId: item.id, isReview: true }
 }

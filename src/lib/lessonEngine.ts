@@ -1,5 +1,5 @@
 import type { ActiveLesson, ExerciseType, ItemProgress, LessonStep } from '../types'
-import { getLessonItems } from './items'
+import { getAllItems, getLessonItems } from './items'
 import { mulberry32, shuffle } from './rng'
 import { pickReview } from './scheduler'
 
@@ -14,11 +14,13 @@ export function generateLesson({
 }): Pick<ActiveLesson, 'seed' | 'lessonNumber' | 'steps'> {
   const rng = mulberry32(seed)
   const lessonItems = getLessonItems(lessonNumber)
+  const allItems = getAllItems()
   const steps: LessonStep[] = []
   const recent: string[] = []
 
   lessonItems.forEach((item, index) => {
     steps.push({ type: 'TEACH_CARD', itemId: item.id, isNew: true })
+    steps.push({ type: 'LISTEN_REPEAT', itemId: item.id, isNew: true })
     steps.push({ type: 'WORD_BUILD', itemId: item.id, isNew: true })
     steps.push({ type: 'TYPE_WORD', itemId: item.id, isNew: true, awardsStar: true })
     recent.push(item.id)
@@ -27,7 +29,7 @@ export function generateLesson({
     if ((index + 1) % 2 === 0) {
       const review = pickReview({
         itemProgress,
-        items: lessonItems,
+        items: allItems,
         recentIds: recent.slice(-3),
         rng,
       })
@@ -38,7 +40,7 @@ export function generateLesson({
     }
   })
 
-  const quizTypes: ExerciseType[] = ['MCQ_SPELLING', 'MCQ_SI_TO_EN', 'IMAGE_MATCH']
+  const quizTypes: ExerciseType[] = ['MCQ_SPELLING', 'MCQ_SI_TO_EN', 'MCQ_EN_TO_SI', 'IMAGE_MATCH']
   shuffle(lessonItems, rng)
     .slice(0, 5)
     .forEach((item) => {

@@ -38,8 +38,15 @@ export default function Mcq({ item, type, seed, onResult }: McqProps) {
 
   useEffect(() => {
     if (type === 'MCQ_SI_TO_EN') return
-    playFile(type === 'IMAGE_MATCH' ? item.audio_sentence : item.audio_word)
+    const src = type === 'IMAGE_MATCH' || type === 'MCQ_EN_TO_SI' ? item.audio_sentence : item.audio_word
+    playFile(src)
   }, [item, type, seed])
+
+  useEffect(() => {
+    if (!rescue) return
+    const id = window.setTimeout(() => finish({ correct: false, rescued: true }), 1200)
+    return () => window.clearTimeout(id)
+  }, [rescue])
 
   const options = useMemo<McqOption[]>(() => {
     const rng = mulberry32(seed)
@@ -58,6 +65,14 @@ export default function Mcq({ item, type, seed, onResult }: McqProps) {
         rng,
       )
     }
+    if (type === 'MCQ_EN_TO_SI') {
+      const options: McqOption[] = [{ id: item.id, label: item.si_sentence, correct: true }]
+      for (const id of item.distractors.image) {
+        const other = getItem(id)
+        if (other) options.push({ id: other.id, label: other.si_sentence })
+      }
+      return shuffle(options, rng)
+    }
     return shuffle(
       [
         { id: item.id, item, correct: true, image: true },
@@ -72,7 +87,9 @@ export default function Mcq({ item, type, seed, onResult }: McqProps) {
       ? t('step.pickCorrectSpelling')
       : type === 'MCQ_SI_TO_EN'
         ? t('step.whatDoesThisMean')
-        : t('step.pickTheImage')
+        : type === 'MCQ_EN_TO_SI'
+          ? t('step.pickSinhala')
+          : t('step.pickTheImage')
 
   function finish(result: StepResult) {
     if (settled.current) return
@@ -116,7 +133,7 @@ export default function Mcq({ item, type, seed, onResult }: McqProps) {
       <p className="si text-center text-muted">{title}</p>
       {type === 'MCQ_SI_TO_EN' ? (
         <p className="si text-center text-2xl font-bold">{item.si_sentence}</p>
-      ) : type === 'IMAGE_MATCH' ? (
+      ) : type === 'IMAGE_MATCH' || type === 'MCQ_EN_TO_SI' ? (
         <div className="flex items-center justify-center gap-2">
           <button type="button" onClick={() => playFile(item.audio_sentence)} className="en text-xl">
             {item.en_sentence}
