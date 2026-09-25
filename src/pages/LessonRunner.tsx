@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppShell from '../components/AppShell'
-import SpeakerButton from '../components/SpeakerButton'
 import TeachCard from '../exercises/TeachCard'
 import WordBuild from '../exercises/WordBuild'
 import TypeWord from '../exercises/TypeWord'
@@ -80,7 +79,6 @@ export default function LessonRunner() {
 
   const seed = currentLesson.seed + currentLesson.stepIndex
   const stepKey = `${currentLesson.stepIndex}-${currentStep.type}-${currentStep.itemId}`
-  const promptSrc = instructionSrc[currentStep.type]
   const view =
     currentStep.type === 'TEACH_CARD' ? (
       <TeachCard key={stepKey} item={currentItem} onResult={onResult} />
@@ -147,7 +145,6 @@ export default function LessonRunner() {
             <i className="si block h-full rounded-full bg-primary" style={{ width: `${(current / total) * 100}%` }} />
           </div>
         </div>
-        <SpeakerButton src={promptSrc} />
         <span className="shrink-0 rounded-full bg-warning-soft px-3 py-1 text-sm font-semibold text-ink">⭐ {profile.stars}</span>
       </header>
       {view}
