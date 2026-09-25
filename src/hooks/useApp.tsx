@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { applyAnswer, emptyProgress, emptyState, loadState, saveState } from '../lib/progressStore'
 import { generateLesson } from '../lib/lessonEngine'
+import { getLessonMeta } from '../lib/items'
 import type { ActiveLesson, AppState, LessonStep, Profile, StepResult } from '../types'
 
 type AppContextValue = {
@@ -10,7 +11,25 @@ type AppContextValue = {
   selectProfile: (id: string) => void
   addProfile: (name: string, avatar: string) => void
   startOrResumeLesson: () => void
+  startLesson: (lessonNumber: number) => void
   answerStep: (step: LessonStep, result: StepResult) => void
+}
+
+function createActiveLesson(profile: Profile, lessonNumber: number): ActiveLesson | null {
+  if (profile.activeLesson) return null
+  if (!getLessonMeta(lessonNumber)) return null
+  const lesson = generateLesson({
+    lessonNumber,
+    itemProgress: profile.itemProgress,
+    seed: Date.now(),
+  })
+  return {
+    ...lesson,
+    stepIndex: 0,
+    starsThisLesson: 0,
+    quizWrong: false,
+    newDone: {},
+  }
 }
 
 const AppContext = createContext<AppContextValue | null>(null)
@@ -60,39 +79,54 @@ export function AppProvider({ children }: { children: ReactNode }) {
         }
         setState((s) => ({ profiles: [...s.profiles, next], activeId: id }))
       },
-      startOrResumeLesson() {
-        if (!profile || profile.activeLesson) return
-        const seed = Date.now()
-        const lesson = generateLesson({
-          lessonNumber: profile.lessonNumber,
-          itemProgress: profile.itemProgress,
-          seed,
-        })
-        const activeLesson: ActiveLesson = {
-          ...lesson,
-          stepIndex: 0,
-          starsThisLesson: 0,
-          quizWrong: false,
-          newDone: {},
-        }
+      startLesson(lessonNumber) {
+        if (!profile) return
+        const activeLesson = createActiveLesson(profile, lessonNumber)
+        if (!activeLesson) return
         setState((s) => ({
           ...s,
           profiles: s.profiles.map((p) => (p.id === s.activeId ? { ...p, activeLesson } : p)),
         }))
       },
-      answerStep(step, { correct, rescued }) {
+      startOrResumeLesson() {
+        if (!profile) return
+        const activeLesson = createActiveLesson(profile, profile.lessonNumber)
+        if (!activeLesson) return
+        setState((s) => ({
+          ...s,
+          profiles: s.profiles.map((p) => (p.id === s.activeId ? { ...p, activeLesson } : p)),
+        }))
+      },
+      answerStep(step, result) {
         setState((s) => ({
           ...s,
           profiles: s.profiles.map((p) => {
             if (p.id !== s.activeId || !p.activeLesson) return p
             const itemProgress = { ...p.itemProgress }
-            const prev = itemProgress[step.itemId] || emptyProgress()
-            const scoredCorrect = Boolean(correct) && !rescued
-            itemProgress[step.itemId] = applyAnswer(prev, scoredCorrect)
+            const scoredSpeech =
+              step.type === 'LISTEN_REPEAT' &&
+              result.correct &&
+              !result.rescued &&
+              !result.skipped &&
+              !result.unscored
+
+            const ignore =
+              result.skipped ||
+              result.unscored ||
+              (step.type === 'LISTEN_REPEAT' && !scoredSpeech)
+
+            if (!ignore) {
+              const prev = itemProgress[step.itemId] || emptyProgress()
+              const scoredCorrect = Boolean(result.correct) && !result.rescued
+              itemProgress[step.itemId] = applyAnswer(prev, scoredCorrect)
+            }
 
             const lesson = { ...p.activeLesson }
-            if (step.isQuiz && !scoredCorrect) lesson.quizWrong = true
-            if (step.awardsStar && correct) {
+            if (step.isQuiz && !ignore && !(result.correct && !result.rescued)) {
+              lesson.quizWrong = true
+            }
+
+            if (step.awardsStar && result.correct && !result.skipped && !result.unscored) {
               lesson.newDone = { ...lesson.newDone, [step.itemId]: true }
               lesson.starsThisLesson += 1
             }

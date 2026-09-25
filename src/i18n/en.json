@@ -1,0 +1,23 @@
+{
+    "entry.forParents": "For parents",
+    "page.title": "What your child will learn",
+    "page.sub": "Lessons, words, and what’s coming next",
+    "count.units": "{n} units",
+    "count.lessons": "{n} lessons",
+    "count.words": "{n} words",
+    "howItWorks": "How it works",
+    "skills": "Skills",
+    "comingNext": "Coming next",
+    "progress.view": "See a child’s progress",
+    "progress.pick": "Pick a child",
+    "progress.known": "Known",
+    "progress.learning": "Learning",
+    "progress.new": "New",
+    "action.share": "Share",
+    "action.print": "Print",
+    "how.see": "See",
+    "how.build": "Build",
+    "how.type": "Type",
+    "how.review": "Review",
+    "nav.home": "Home"
+  }
