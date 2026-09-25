@@ -126,9 +126,45 @@ export default function ListenRepeat({ item, onResult, onSilence }: ListenRepeat
 
       if (PRACTICE_MODE) {
         const replay = new Audio(url)
-        await replay.play().catch(() => {})
-        URL.revokeObjectURL(url)
-        if (!alive.current) return
+        try {
+          await new Promise<void>((resolve) => {
+            let ended = false
+            let durationWait = 0
+            const done = () => {
+              if (ended) return
+              ended = true
+              window.clearTimeout(fallback)
+              window.clearTimeout(durationWait)
+              replay.onended = null
+              replay.onerror = null
+              resolve()
+            }
+            const fallback = window.setTimeout(done, 6000)
+            cleanup.current = () => {
+              aborted = true
+              replay.pause()
+              replay.removeAttribute('src')
+              replay.load()
+              done()
+            }
+            replay.onended = done
+            replay.onerror = done
+            replay
+              .play()
+              .then(() => {
+                const ms = replay.duration
+                if (Number.isFinite(ms) && ms > 0) {
+                  window.clearTimeout(fallback)
+                  durationWait = window.setTimeout(done, Math.ceil(ms * 1000) + 80)
+                }
+              })
+              .catch(done)
+          })
+        } finally {
+          cleanup.current = null
+          URL.revokeObjectURL(url)
+        }
+        if (!alive.current || aborted) return
         playTone(true)
         finish({ correct: true, rescued: false, unscored: true })
         return
